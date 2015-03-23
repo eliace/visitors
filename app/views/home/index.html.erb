@@ -1,0 +1,15 @@
+
+<%= stylesheet_link_tag    'main', media: 'all' %>
+<%= javascript_include_tag 'main' %>
+
+<script>
+	
+$(document).ready(function(){
+	
+	app.user = new Ergo.data.Object(<%== @user.to_json %>, {});
+	
+	app.change('manager');
+	
+});
+
+</script>

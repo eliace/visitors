@@ -1,0 +1,21 @@
+
+.nav-clock, .nav-clock span {
+  color: #777;
+  font-size: 24px;
+  text-align: center;
+}
+
+
+.menu-bar, .menu-bar > li {
+	float: none !important;
+}
+
+
+.clock-ticker {
+	animation: blinker 0.8s linear infinite alternate;	
+}
+
+@keyframes blinker {  
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
