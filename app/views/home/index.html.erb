@@ -8,7 +8,7 @@ $(document).ready(function(){
 	
 	app.user = new Ergo.data.Object(<%== @user.to_json %>, {});
 	
-	app.change('manager');
+	app.change('manager', {page: 'visitors'});
 	
 });
 

@@ -1,9 +1,63 @@
 
+Context = Ergo.core.Object.extend({
+
+	defaults: {
+		plugins: [Ergo.Observable]		
+	},
+
+
+	_construct: function(o) {
+		this.$super(o);
+
+		this._states = {};
+
+		this._children = new Ergo.core.Array();
+
+	},
+
+
+
+	// добавление состояния в контекст
+	state: function(name, callback) {
+
+
+	},
+
+
+	// подсоединяем состояние
+	// расширяется пространство контекста
+	push: function(name) {
+
+	},
+
+
+	// отсоединяем состояние
+	// сужается пространство контекста
+	pop: function(name) {
+
+	},
+
+
+	// переключаемся в новое состояние
+	// пространство контекста изменяется
+	change: function(name) {
+
+	}
+
+
+
+
+
+});
+
+
+
 var $context = new Ergo.core.Object({
 	plugins: [Ergo.Observable]	
 });
 
 $context._states = {};
+$context._scope = {widgets: {}};
 
 $context.state = function(name, callback) {
 	
@@ -24,12 +78,16 @@ $context.change = function(name, params) {
 	// 2. загружаем новое состояни
 	
 	// создаем скоуп состояния
-	var scope = {
-		// заполняется виджетами состояния (они будут удалены при закрытии скоупа) 
-		widgets: {},
-		// сериализуемые параметры состояния
-		params: params
-	};
+	// var scope = {
+	// 	// заполняется виджетами состояния (они будут удалены при закрытии скоупа) 
+	// 	widgets: {},
+	// 	// сериализуемые параметры состояния
+	// 	params: params
+	// };
+
+	var scope = this._scope;
+
+	Ergo.deep_override(scope, {params: params});
 	
 	// заполняем скоуп состояния
 	state.call(this, scope);
@@ -49,7 +107,6 @@ $context.change = function(name, params) {
 // 			
 		// scope.widgets[i] = w;
 	}
-	
 	
 	
 };

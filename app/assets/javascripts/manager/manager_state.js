@@ -1,3 +1,4 @@
+//= require manager/visitors_state
 
 
 
@@ -104,26 +105,57 @@ app.state('manager', function($context) {
 					}
 				},
 				actions: {
-					'jquery:click': 'select'
+					'jquery:click': 'menuItem'
 				}				
 			},
 			items: [{
-				text: 'Посетители'
+				text: 'Посетители',
+				name: 'visitors'
 			}, {
-				text: 'Расписание'
+				text: 'Расписание',
+				name: 'schedule'
 			}, {
-				text: 'Организации'
+				text: 'Организации',
+				name: 'departments'
 			}]
+		},
+
+
+		onMenuItem: function(e) {
+			this.opt('index', e.target.opt('name'));
+		},
+
+
+		set: {
+			'index': function(v) {
+
+				// выбираем пункт меню
+				this.content.selection.set(v);
+
+				// устанавливаем состояние
+				self.change(v);
+
+			}
 		}
+
 	});
 	
 	
+	var content = $.ergo({
+		etype: 'box'
+	});
+
+
 
 	
 	$context.widgets['navigation'] = navigation;
 	$context.widgets['menu'] = menu;
+	$context.widgets['content'] = content;
 	
 	
 	self.events.fire('clock');
+
+
+	menu.opt('index', $context.params['page']);
 	
 });
