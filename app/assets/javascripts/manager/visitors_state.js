@@ -1,7 +1,7 @@
 //= require models/visitors
 
 
-app.state('visitors', function($context) {
+app.state('manager:visitors', function($context) {
 
 	$context._data['visitors'] = new Ergo.data.Collection({provider: VisitorsProvider});
 
@@ -9,13 +9,11 @@ app.state('visitors', function($context) {
 	var visitors = $.ergo({
 	  etype: 'table-grid',
 	  cls: 'list-view cell-large',
-		// etype: 'box',
-		// cls: 'list-box',
 		data: $context.data('visitors'),
 		autoFetch: true,
 
-		$content_autoHeight: false,
-		$header_autoRender: false,
+		$content_autoHeight: false,		// "отпустим" высоту
+		$header_autoRender: false,		// не будем рисовать заголовок
 
 		style: {'margin': 24},
 
@@ -32,24 +30,6 @@ app.state('visitors', function($context) {
 			dataId: 'status',
 			binding: 'text'
 		}]
-		// dynamic: true,
-		// defaultItem: {
-		// 	etype: 'item-box',
-		// 	layout: 'hbox',
-		// 	items: [{
-  //       binding: 'text',
-  //       dataId: 'title',
-  //       width: 140				
-		// 	}, {
-  //       binding: 'text',
-  //       dataId: 'department.title',
-  //       width: 140				
-		// 	}, {
-  //       binding: 'text',
-  //       dataId: 'status',
-  //       width: 140				
-		// 	}]
-		// }
 	});
 
 	this.widget('visitors', visitors);

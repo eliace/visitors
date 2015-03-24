@@ -19,6 +19,12 @@ Rails.application.routes.draw do
   resources :visitors do
   end
 
+  resources :schedules do
+  end
+
+  resources :departments do
+  end
+
 
   # Example resource route with options:
   #   resources :products do

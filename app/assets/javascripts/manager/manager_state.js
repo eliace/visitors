@@ -1,4 +1,5 @@
 //= require manager/visitors_state
+//= require manager/schedules_state
 
 
 
@@ -16,21 +17,23 @@ app.state('manager', function($context) {
 	
 	var navigation = $.ergo({
 		
-		etype: 'html:nav',
+		etype: 'navigation',
 		title: 'Система контроля посетителей',
-		style: {'width': '100%', 'border-bottom': '1px solid #e7e7e7'},
-		layout: 'column',
-		$header: {
-			etype: 'box',
-			wrapper: {
-				width: '1%'
-			},
-			$content: {
-				etype: 'link',
-				text: 'Система контроля посетителей',
-				cls: 'nav-title'
-			}
-		},
+		style: {/*'width': '100%',*/ 'border-bottom': '1px solid #e7e7e7'},
+//		layout: 'column',
+		cls: 'nav-main',
+		layout: 'fluid',
+		// $header: {
+		// 	etype: 'box',
+		// 	// wrapper: {
+		// 	// 	width: '1%'
+		// 	// },
+		// 	$content: {
+		// 		etype: 'link',
+		// 		text: 'Система контроля посетителей',
+		// 		cls: 'nav-title'
+		// 	}
+		// },
 		$content: {
 			etype: 'box',
 			$clock: {
@@ -62,18 +65,18 @@ app.state('manager', function($context) {
 				}
 				
 			},
-			wrapper: {
-				width: '98%'
-			}
+			// wrapper: {
+			// 	width: '98%'
+			// }
 		},
 		$user: {
 			etype: 'menu-bar',
-			cls: 'user',
+			cls: 'user right',
 //			state: 'right',
 			width: 100,			
-			wrapper: {
-				width: '1%'
-			},
+			// wrapper: {
+			// 	width: '1%'
+			// },
 			items: [{
 				cls: 'username',
 //				text: 'Username',
@@ -109,13 +112,13 @@ app.state('manager', function($context) {
 			},
 			items: [{
 				text: 'Посетители',
-				name: 'visitors'
+				name: 'manager:visitors'
 			}, {
 				text: 'Расписание',
-				name: 'schedule'
+				name: 'manager:schedules'
 			}, {
 				text: 'Организации',
-				name: 'departments'
+				name: 'manager:departments'
 			}]
 		},
 
@@ -155,6 +158,6 @@ app.state('manager', function($context) {
 	$context.events.fire('clock');
 
 	// восстанавливаем состояние
-	menu.opt('index', $context.params['page']);
+	menu.opt('index', 'manager:' + $context.params['page']);
 	
 });
