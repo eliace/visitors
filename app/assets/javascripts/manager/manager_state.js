@@ -22,7 +22,7 @@ app.state('manager', function($context) {
 		style: {/*'width': '100%',*/ 'border-bottom': '1px solid #e7e7e7'},
 //		layout: 'column',
 		cls: 'nav-main',
-		layout: 'fluid',
+//		layout: 'fluid',
 		// $header: {
 		// 	etype: 'box',
 		// 	// wrapper: {
@@ -35,7 +35,7 @@ app.state('manager', function($context) {
 		// 	}
 		// },
 		$content: {
-			etype: 'box',
+//			etype: 'box',
 			$clock: {
 				cls: 'nav-clock',
 				
@@ -65,27 +65,27 @@ app.state('manager', function($context) {
 				}
 				
 			},
+			$user: {
+				etype: 'menu-bar',
+				cls: 'user right',
+	//			state: 'right',
+//				width: 100,			
+				// wrapper: {
+				// 	width: '1%'
+				// },
+				items: [{
+					cls: 'username',
+	//				text: 'Username',
+					etype: 'text',
+					data: $context.data('user'),
+					dataId: 'username',
+					style: {'white-space': 'nowrap'}
+				}]
+			}						
 			// wrapper: {
 			// 	width: '98%'
 			// }
 		},
-		$user: {
-			etype: 'menu-bar',
-			cls: 'user right',
-//			state: 'right',
-			width: 100,			
-			// wrapper: {
-			// 	width: '1%'
-			// },
-			items: [{
-				cls: 'username',
-//				text: 'Username',
-				etype: 'text',
-				data: $context.data('user'),
-				dataId: 'username',
-				style: {'white-space': 'nowrap'}
-			}]
-		}						
 		
 	}, null, $context);
 	
