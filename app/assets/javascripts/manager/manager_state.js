@@ -4,11 +4,10 @@
 
 app.state('manager', function($context) {
 	
-	var self = this;
-	
+
 	var timer = setInterval(function() {
 		
-		self.events.fire('clock');
+		$context.events.fire('clock');
 				
 	}, 15000);
 	
@@ -79,13 +78,13 @@ app.state('manager', function($context) {
 				cls: 'username',
 //				text: 'Username',
 				etype: 'text',
-				data: this.user,
+				data: $context.data('user'),
 				dataId: 'username',
 				style: {'white-space': 'nowrap'}
 			}]
 		}						
 		
-	}, null, this);
+	}, null, $context);
 	
 	
 	var menu = $.ergo({
@@ -105,7 +104,7 @@ app.state('manager', function($context) {
 					}
 				},
 				actions: {
-					'jquery:click': 'menuItem'
+					'jquery:click': 'menuClick'
 				}				
 			},
 			items: [{
@@ -121,7 +120,7 @@ app.state('manager', function($context) {
 		},
 
 
-		onMenuItem: function(e) {
+		onMenuClick: function(e) {
 			this.opt('index', e.target.opt('name'));
 		},
 
@@ -132,8 +131,8 @@ app.state('manager', function($context) {
 				// выбираем пункт меню
 				this.content.selection.set(v);
 
-				// устанавливаем состояние
-				self.change(v);
+				// изменяем зависимое состояние
+				$context.push(v);
 
 			}
 		}
@@ -148,14 +147,14 @@ app.state('manager', function($context) {
 
 
 	
-	$context.widgets['navigation'] = navigation;
-	$context.widgets['menu'] = menu;
-	$context.widgets['content'] = content;
+	this.widget('navigation', navigation);
+	this.widget('menu', menu);
+	this.widget('content', content);
 	
 	
-	self.events.fire('clock');
+	$context.events.fire('clock');
 
-
+	// восстанавливаем состояние
 	menu.opt('index', $context.params['page']);
 	
 });

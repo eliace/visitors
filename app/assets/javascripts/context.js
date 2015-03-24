@@ -1,4 +1,48 @@
 
+
+Scope = Ergo.core.Object.extend({
+
+	_construct: function(o) {
+		this._super(o);
+
+		this._widgets = {};
+
+
+		this._context = null;
+	},
+
+
+
+
+	// получение виджета из пространства контекста
+	widget: function(key, w) {
+
+		if(arguments.length == 1) {
+			return this._widgets[key];
+		}
+		else if(arguments.length == 2) {
+			this._widgets[key] = w;
+		}
+
+
+	},
+
+
+	params: function() {
+		return this._context._params;
+	},
+
+	context: function() {
+		return this._context;
+	}
+
+
+});
+
+
+
+
+
 Context = Ergo.core.Object.extend({
 
 	defaults: {
@@ -7,26 +51,55 @@ Context = Ergo.core.Object.extend({
 
 
 	_construct: function(o) {
-		this.$super(o);
+		this._super(o);
 
 		this._states = {};
 
-		this._children = new Ergo.core.Array();
+		this._scopes = {};
+
+		this._data = {};
 
 	},
 
 
 
-	// добавление состояния в контекст
-	state: function(name, callback) {
+	widget: function(key) {
 
+		for(var i in this._scopes) {
+			var w = this._scopes[i].widget(key);
+			if(w) return w;
+		}
 
 	},
+
+
+	data: function(key) {
+		return this._data[key];
+	},
+
 
 
 	// подсоединяем состояние
 	// расширяется пространство контекста
 	push: function(name) {
+
+		// создаем контекст
+		var scope = new Scope();
+		// делаем параметры общими
+		scope._context = this;
+
+		this._scopes[name] = scope;
+
+		this._states[name].call(scope, this);
+
+		for(var i in scope._widgets) {
+			
+			var w = scope._widgets[i];
+			
+			if(!w._rendered)
+				w.render('body');
+		}
+
 
 	},
 
@@ -38,11 +111,30 @@ Context = Ergo.core.Object.extend({
 	},
 
 
+
+
+	// добавление состояния в контекст
+	state: function(name, callback) {
+
+		this._states[name] = callback;
+
+	},
+
+
 	// переключаемся в новое состояние
 	// пространство контекста изменяется
-	change: function(name) {
+	change: function(name, params, data) {
 
-	}
+		var ctx = new Context();
+		ctx.params = params;
+		ctx.data = data;
+		ctx._scope = this;
+
+		ctx.push(name);
+
+
+		this._context = ctx;
+	},
 
 
 
@@ -51,7 +143,7 @@ Context = Ergo.core.Object.extend({
 });
 
 
-
+/*
 var $context = new Ergo.core.Object({
 	plugins: [Ergo.Observable]	
 });
@@ -110,7 +202,7 @@ $context.change = function(name, params) {
 	
 	
 };
+*/
 
-
-app = $context;
+app = new Context();
 

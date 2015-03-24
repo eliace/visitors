@@ -6,9 +6,10 @@
 	
 $(document).ready(function(){
 	
-	app.user = new Ergo.data.Object(<%== @user.to_json %>, {});
-	
-	app.change('manager', {page: 'visitors'});
+	app._data.user = new Ergo.data.Object(<%== @user.to_json %>, {});
+	app.params = {page: 'visitors'};
+
+	app.push('manager');
 	
 });
 
