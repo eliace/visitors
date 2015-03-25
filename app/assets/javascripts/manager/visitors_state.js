@@ -22,7 +22,7 @@ app.state('manager:visitors', function($context) {
 				text: 'Новый посетитель',
 				$icon: {
 					etype: 'icon',
-					cls: 'fa fa-fw fa-plus-circle before'
+					cls: 'fa fa-plus-circle before'
 				},
 				$content: {
 					etype: '&text',
@@ -47,7 +47,10 @@ app.state('manager:visitors', function($context) {
 			}, {
 				header: 'Куда',
 				dataId: 'department.title',
-				binding: 'text'
+				binding: 'text',
+				$content: {
+					etype: 'link'
+				}
 			}, {
 				header: 'Статус',
 //				dataId: 'status',
@@ -67,11 +70,35 @@ app.state('manager:visitors', function($context) {
 					}
 				}
 			}, {
+				binding: function(v) {
+
+					if(v.status == 'visiting') {
+						var begin = moment(v.entered_at);
+						var end = moment(new Date());
+						var d = end.subtract(begin);
+						this.opt('text', moment.duration(d).humanize());
+					}
+				}
+			}, {
 				width: 160,
-				$content: {
-					etype: 'button',
-					cls: 'primary tiny',
-					text: 'Действие'
+				binding: function(v) {
+
+					if(v.status == 'visiting') {
+						this.components.set('content', {
+							etype: 'button',
+							cls: 'success tiny',
+							text: 'Выдать пропуск',
+							$content: {
+								etype: '&text',
+								binding: false
+							},
+							$icon: {
+								etype: 'icon',
+								cls: 'fa fa-print after'
+							}
+						});
+					}
+
 				}
 			}]
 		}

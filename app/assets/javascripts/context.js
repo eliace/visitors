@@ -83,6 +83,18 @@ Context = Ergo.core.Object.extend({
 	// расширяется пространство контекста
 	push: function(name) {
 
+		var name_a = name.split(':');
+		var group = (name_a.length == 1) ? null : name_a[0];
+
+		// если присутствует скоуп с такой же группой, то закрываем его
+		for(var i in this._scopes) {
+			if(i.indexOf(group+':') != -1) {
+				this.pop(i);
+			}
+		}
+
+
+
 		// создаем контекст
 		var scope = new Scope();
 		// делаем параметры общими
@@ -107,6 +119,17 @@ Context = Ergo.core.Object.extend({
 	// отсоединяем состояние
 	// сужается пространство контекста
 	pop: function(name) {
+
+		var scope = this._scopes[name];
+
+		for(var i in scope._widgets) {
+			
+			var w = scope._widgets[i];
+
+			w._destroy();
+			
+		}
+
 
 	},
 

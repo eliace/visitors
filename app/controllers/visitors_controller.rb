@@ -9,8 +9,8 @@ class VisitorsController < ApplicationController
 			title: 'Петров И.Н.',
 			status: :waiting,
 			status_text: 'Ожидается',
-			visit_begin: '24-03-2015T10:00',
-			visit_end: '24-03-2015T11:00',
+			visit_begin: '2015-03-24T10:00',
+			visit_end: '2015-03-24T11:00',
 			department: {
 				id: 11,
 				title: 'Общий отдел'
@@ -20,8 +20,9 @@ class VisitorsController < ApplicationController
 			title: 'Иванов С.Р.',
 			status: :visiting,
 			status_text: 'В здании',
-			visit_begin: '24-03-2015T10:40',
-			visit_end: '24-03-2015T12:00',
+			visit_begin: '2015-03-24T10:40',
+			visit_end: '2015-03-24T12:00',
+			entered_at: '2015-03-24T11:10',
 			department: {
 				id: 12,
 				title: 'Секретариат зам. главы РК'
@@ -31,8 +32,8 @@ class VisitorsController < ApplicationController
 			title: 'Сидоров В.Е.',
 			status: :leaving,
 			status_text: 'Выходит',
-			visit_begin: '24-03-2015T10:40',
-			visit_end: '24-03-2015T12:00',
+			visit_begin: '2015-03-24T10:40',
+			visit_end: '2015-03-24T12:00',
 			department: {
 				id: 13,
 				title: 'Отдел кадров'
