@@ -1,4 +1,5 @@
 //= require models/visitors
+//= require manager/new_visitor_dialog
 
 
 app.state('manager:visitors', function($context) {
@@ -27,6 +28,11 @@ app.state('manager:visitors', function($context) {
 				$content: {
 					etype: '&text',
 					binding: false
+				},
+				events: {
+					'jquery:click': function(e) {
+						$context.push('dialog:visitors:new');
+					}
 				}
 			}]
 		},
@@ -84,10 +90,12 @@ app.state('manager:visitors', function($context) {
 				binding: function(v) {
 
 					if(v.status == 'visiting') {
+
 						this.components.set('content', {
+							width: 120,
 							etype: 'button',
 							cls: 'success tiny',
-							text: 'Выдать пропуск',
+							text: 'Пропуск',
 							$content: {
 								etype: '&text',
 								binding: false
@@ -97,11 +105,31 @@ app.state('manager:visitors', function($context) {
 								cls: 'fa fa-print after'
 							}
 						});
+
+					}
+					else if(v.status == 'leaving') {
+
+						this.components.set('content', {
+							width: 120,
+							etype: 'button',
+							cls: 'default tiny',
+							text: 'Продлить',
+							$content: {
+								etype: '&text',
+								binding: false
+							},
+							$icon: {
+								etype: 'icon',
+								cls: 'fa fa-refresh after'
+							}
+						});
+						
 					}
 
 				}
 			}]
 		}
+
 	});
 
 	this.widget('visitors', visitors);
